@@ -25,7 +25,7 @@ app.post("/getUrl", (req, res) => {
     const undName = isSunday(sampleYear, sampleMonth, sampleDay) ? escName : escName + extension;
     console.log("un", undName, escName, extension);
     res.json({
-        src: Buffer(isSunday(year, month, day) ? `${name}/${year}/${formatNum(month)}/${undName}_hs.${year}${formatNum(month)}${formatNum(day)}_${size}.png` : `${name}/${year}/${formatNum(month)}/${undName}.${year}${formatNum(month)}${formatNum(day)}_${size}.gif`).toString("base64"),
+        src: Buffer(isSunday(year, month, day) ? `${name}/${year}/${formatNum(month)}/${undName}_hs.${year}${formatNum(month)}${formatNum(day)}_1536.png` : `${name}/${year}/${formatNum(month)}/${undName}.${year}${formatNum(month)}${formatNum(day)}_${size}.gif`).toString("base64"),
         previous: mom.subtract(1, "day").format("YYYY-MM-DD"),
         next: mom.add(2, "day").format("YYYY-MM-DD"),
     });
