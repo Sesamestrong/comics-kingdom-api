@@ -10,7 +10,7 @@ const getUrl = (title, undTitle, year, month, day, res) => {
     const isSunday = theDate.getDay() === 0;
     return "https://safr.kingfeatures.com/api/img.php?e=gif&s=c&file=" + btoa(`${title}/${formatNum(year,2)}/${formatNum(month,2)}/${undTitle}${isSunday?"_qt":""}.${year}${formatNum(month,2)}${formatNum(day,2)}_${res}.${isSunday?"png":"gif"}`);
 };
-const regex = /([^\/]+)\/\d+\/\d+\/([^.]+)((?:_[^.]+)|)\.(\d{4})(\d{2})(\d{2})_\d+\.(.+)$/;
+const regex = /([^\/]+)\/\d+\/\d+\/([^.]+)((?:_[^.]+)|)\.(\d{4})(\d{2})(\d{2})_(\d+)\.(.+)$/;
 const isSunday = (year, month, day) => moment(`${year}-${month}-${day}`, "YYYY-MM-DD").format("d") == 0;
 const formatNum = (num, digits = 2) => num.toString().padStart(digits, "0")
 app.post("/getUrl", (req, res) => {
@@ -18,11 +18,10 @@ app.post("/getUrl", (req, res) => {
         base64,
         year,
         month,
-        day,
-        size = 900
+        day
     } = req.body;
     const mom = moment(`${year}-${month}-${day}`,"YYYY-MM-DD");
-    const [_, name, escName, extension, sampleYear, sampleMonth, sampleDay, format] = Buffer(base64, "base64").toString().match(regex);
+    const [_, name, escName, extension, sampleYear, sampleMonth, sampleDay, size, format] = Buffer(base64, "base64").toString().match(regex);
     const undName = isSunday(sampleYear, sampleMonth, sampleDay) ? escName : escName + extension;
     console.log("un", undName, escName, extension);
     res.json({
