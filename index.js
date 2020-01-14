@@ -23,7 +23,7 @@ app.post("/getUrl", (req, res) => {
     const mom = moment(`${year}-${month}-${day}`,"YYYY-MM-DD");
     const [_, name, escName, extension, sampleYear, sampleMonth, sampleDay, size, format] = Buffer(base64, "base64").toString().match(regex);
     const undName = isSunday(sampleYear, sampleMonth, sampleDay) ? escName : escName + extension;
-    console.log("un", undName, escName, extension);
+    //TODO Handle _ntb strips like dustin
     res.json({
         src: Buffer(isSunday(year, month, day) ? `${name}/${year}/${formatNum(month)}/${undName}_hs.${year}${formatNum(month)}${formatNum(day)}_1536.png` : `${name}/${year}/${formatNum(month)}/${undName}.${year}${formatNum(month)}${formatNum(day)}_${size}.gif`).toString("base64"),
         previous: mom.subtract(1, "day").format("YYYY-MM-DD"),
